@@ -119,7 +119,7 @@ let config = {
     },
     {
       module: "MMM-network-signal",
-      position: "bottom_right",
+      position: "top_right",
       config: {
         // Configuration of the module goes here
         animationSpeed: "2000",
@@ -140,7 +140,7 @@ let config = {
     },
     {
 		module: 'MMM-Todoist',
-		position: 'top_right',	// This can be any of the regions. Best results in left or right regions.
+		position: 'bottom_right',	// This can be any of the regions. Best results in left or right regions.
 		header: 'Todoist', // This is optional
 		config: { // See 'Configuration options' for more information.
 			hideWhenEmpty: false,
