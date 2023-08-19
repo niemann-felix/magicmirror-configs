@@ -70,7 +70,6 @@ let config = {
         location: "Wassenberg",
         locationID: "2813786", //ID from http://bulk.openweathermap.org/sample/city.list.json.gz; unzip the gz file and find your city
         apiKey: "", //openweathermap.org API key HERE ~scr~
-
         degreeLabel: true,
         showWindDirectionAsArrow: false,
         showHumidity: true,
@@ -129,7 +128,6 @@ let config = {
         scale: "0.15",
       },
     },
-
     {
       module: "MMM-BurnIn",
       position: "bottom_bar", // whatever, doesn't render anything
@@ -139,20 +137,55 @@ let config = {
       },
     },
     {
-		module: 'MMM-Todoist',
-		position: 'bottom_right',	// This can be any of the regions. Best results in left or right regions.
-		header: 'Todoist', // This is optional
-		config: { // See 'Configuration options' for more information.
-			hideWhenEmpty: false,
-			accessToken: '', // TODOIST ACCESS TOKEN HERE ~scr~
-			maximumEntries: 60,
-			sortType: "dueDateDescPriority",
-			updateInterval: 10*60*1000, // Update every 10 minutes
-			fade: false,      
-			// projects and/or labels is mandatory:
-			projects: [2295876986], 
-			labels: [ ] // Tasks for any projects with these labels will be shown.
-      			}
+      module: 'MMM-SmartWebDisplay',
+      position: 'bottom_right',       // This can be any of the regions.
+      config: {
+        // See 'Configuration options' for more information.
+        logDebug: false, //set to true to get detailed debug logs. To see them : "Ctrl+Shift+i"
+        height: "45px", //hauteur du cadre en pixel ou %
+        width: "350px", //largeur
+        updateInterval: 0, //in min. Set it to 0 for no refresh (for videos)
+        NextURLInterval: 5, //in min, set it to 0 not to have automatic URL change. If only 1 URL given, it will be updat>
+        displayLastUpdate: false, //to display the last update of the URL
+        displayLastUpdateFormat: 'ddd - HH:mm:ss', //format of the date and time to display
+        url: ["https://buchung.hsz.rwth-aachen.de/angebote/aktueller_zeitraum/_Auslastung.html#bs_kb895CF94CEE58"], //source of the URL to be displayed
+        scrolling: "no", // allow scrolling or not. html 4 only
+        shutoffDelay: 10000 //delay in miliseconds to video shut-off while using together with MMM-PIR-Sens>
+      }
+    },
+
+    {
+      module: 'MMM-SmartWebDisplay',
+      position: 'bottom_center',	// This can be any of the regions.
+      config: {
+        // See 'Configuration options' for more information.
+        logDebug: false, //set to true to get detailed debug logs. To see them : "Ctrl+Shift+i"
+        height: "400px", //hauteur du cadre en pixel ou %
+        width: "100%", //largeur
+        updateInterval: 0, //in min. Set it to 0 for no refresh (for videos)
+        NextURLInterval: 0.5, //in min, set it to 0 not to have automatic URL change. If only 1 URL given, it will be updated
+        displayLastUpdate: false, //to display the last update of the URL
+        displayLastUpdateFormat: 'ddd - HH:mm:ss', //format of the date and time to display
+        url: ["http://192.168.1.2/inventory?#maintable", "http://192.168.1.2/products#maintable"], //source of the URL to be displayed
+        scrolling: "no", // allow scrolling or not. html 4 only
+        shutoffDelay: 10000 //delay in miliseconds to video shut-off while using together with MMM-PIR-Sensor 
+      }
+    },
+    {
+      module: 'MMM-Todoist',
+      position: 'bottom_right',	// This can be any of the regions. Best results in left or right regions.
+      header: 'Todoist', // This is optional
+      config: { // See 'Configuration options' for more information.
+        hideWhenEmpty: false,
+        accessToken: '', // TODOIST ACCESS TOKEN HERE ~scr~
+        maximumEntries: 60,
+        sortType: "dueDateDescPriority",
+        updateInterval: 10 * 60 * 1000, // Update every 10 minutes
+        fade: false,
+        // projects and/or labels is mandatory:
+        projects: [2295876986],
+        labels: [] // Tasks for any projects with these labels will be shown.
+      }
     }
   ],
 };
