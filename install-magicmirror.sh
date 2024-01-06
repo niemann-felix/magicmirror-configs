@@ -36,7 +36,9 @@ echo "MagicMirror installation complete!\n"
 echo "Restarting MagicMirror...\n"
 pm2 restart mm
 
-grep '~scr~' --context=1 ~/MagicMirror/config/config.js
 echo "Important: Please edit the config.js file to add your API keys and other information.\n"
+
+echo "To set up Spotify, please follow the instructions here: https://github.com/raywo/MMM-NowPlayingOnSpotify\n"
+
 echo "\n"
 echo "Script complete!\n"

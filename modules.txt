@@ -1,3 +1,4 @@
 https://github.com/werthdavid/MMM-BurnIn.git
 https://github.com/PoOwAa/MMM-network-signal.git
 https://github.com/cbrooker/MMM-Todoist.git
+https://github.com/raywo/MMM-NowPlayingOnSpotify

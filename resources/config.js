@@ -7,6 +7,17 @@
  * see https://docs.magicmirror.builders/configuration/introduction.html
  * and https://docs.magicmirror.builders/modules/configuration.html
  */
+
+// Put your variables here
+const weather_location = "";
+const weather_location_id = ""; //ID from http://bulk.openweathermap.org/sample/city.list.json.gz; unzip the gz file and find your city
+const weather_api_key = ""; // Get your key here: https://openweathermap.org/
+
+const todoist_access_token = "";
+const todoist_projects = [];
+
+const private_calendar_url = "";
+
 let config = {
   address: "192.168.1.5", // Address to listen on, can be:
   // - "localhost", "127.0.0.1", "::1" to listen on loopback interface
@@ -48,6 +59,26 @@ let config = {
       position: "top_bar",
     },
     {
+      module: "MMM-BurnIn",
+      position: "bottom_bar", // whatever, doesn't render anything
+      config: {
+        updateInterval: 15, // in Minutes
+        invertDuration: 10, // in Seconds
+      },
+    },
+    {
+      module: "MMM-network-signal",
+      position: "top_right",
+      config: {
+        // Configuration of the module goes here
+        animationSpeed: "2000",
+        updateInterval: "20000",
+        initialLoadDelay: "3000",
+        showMessage: false,
+        scale: "0.15",
+      },
+    },
+    {
       module: "clock",
       position: "top_left",
       config: {
@@ -67,9 +98,9 @@ let config = {
       config: {
         weatherProvider: "openweathermap",
         type: "current",
-        location: "Wassenberg",
-        locationID: "2813786", //ID from http://bulk.openweathermap.org/sample/city.list.json.gz; unzip the gz file and find your city
-        apiKey: "", //openweathermap.org API key HERE ~scr~
+        location: weather_location, // location ~scr~
+        locationID: weather_location_id, //ID from http://bulk.openweathermap.org/sample/city.list.json.gz; unzip the gz file and find your city
+        apiKey: weather_api_key,
         degreeLabel: true,
         showWindDirectionAsArrow: false,
         showHumidity: true,
@@ -86,10 +117,9 @@ let config = {
       config: {
         weatherProvider: "openweathermap",
         type: "forecast",
-        location: "Wassenberg",
-        locationID: "2813786", //ID from http://bulk.openweathermap.org/sample/city.list.json.gz; unzip the gz file and find your city
-        apiKey: "", //openweathermap.org API key HERE ~scr~
-
+        location: weather_location,
+        locationID: weather_location_id, //ID from http://bulk.openweathermap.org/sample/city.list.json.gz; unzip the gz file and find your city
+        apiKey: weather_api_key,
         showRainAmount: true,
         colored: "true",
         scale: true,
@@ -103,42 +133,22 @@ let config = {
         calendars: [
           {
             symbol: "menorah",
-            url: "", // Feiertage ICS LINK HERE ~scr~
+            url: "https://calendar.google.com/calendar/ical/de.german%23holiday%40group.v.calendar.google.com/public/basic.ics",
           },
           {
             symbol: "moon",
-            url: "", // Mondphasen ICS LINK HERE ~scr~
+            url: "https://calendar.google.com/calendar/ical/ht3jlfaac5lfd6263ulfh4tql8%40group.calendar.google.com/public/basic.ics",
           },
           {
-            symbol: "calendar-day",
-            url: "", // Personal Calender ICS LINK HERE ~scr~
-          },
+            symbol: "calendar",
+            url: private_calendar_url,
+          }
         ],
       },
     },
     {
-      module: "MMM-network-signal",
-      position: "top_right",
-      config: {
-        // Configuration of the module goes here
-        animationSpeed: "2000",
-        updateInterval: "20000",
-        initialLoadDelay: "3000",
-        showMessage: false,
-        scale: "0.15",
-      },
-    },
-    {
-      module: "MMM-BurnIn",
-      position: "bottom_bar", // whatever, doesn't render anything
-      config: {
-        updateInterval: 15, // in Minutes
-        invertDuration: 10, // in Seconds
-      },
-    },
-    {
-      module: 'MMM-SmartWebDisplay',
-      position: 'bottom_right',       // This can be any of the regions.
+      module: "MMM-SmartWebDisplay",
+      position: "top_left", // This can be any of the regions.
       config: {
         // See 'Configuration options' for more information.
         logDebug: false, //set to true to get detailed debug logs. To see them : "Ctrl+Shift+i"
@@ -147,16 +157,17 @@ let config = {
         updateInterval: 0, //in min. Set it to 0 for no refresh (for videos)
         NextURLInterval: 5, //in min, set it to 0 not to have automatic URL change. If only 1 URL given, it will be updat>
         displayLastUpdate: false, //to display the last update of the URL
-        displayLastUpdateFormat: 'ddd - HH:mm:ss', //format of the date and time to display
-        url: ["https://buchung.hsz.rwth-aachen.de/angebote/aktueller_zeitraum/_Auslastung.html#bs_kb895CF94CEE58"], //source of the URL to be displayed
+        displayLastUpdateFormat: "ddd - HH:mm:ss", //format of the date and time to display
+        url: [
+          "https://buchung.hsz.rwth-aachen.de/angebote/aktueller_zeitraum/_Auslastung.html#bs_kb0B615602A178",
+        ], //source of the URL to be displayed
         scrolling: "no", // allow scrolling or not. html 4 only
-        shutoffDelay: 10000 //delay in miliseconds to video shut-off while using together with MMM-PIR-Sens>
-      }
+        shutoffDelay: 10000, //delay in miliseconds to video shut-off while using together with MMM-PIR-Sens>
+      },
     },
-
     {
-      module: 'MMM-SmartWebDisplay',
-      position: 'bottom_center',	// This can be any of the regions.
+      module: "MMM-SmartWebDisplay",
+      position: "bottom_center", // This can be any of the regions.
       config: {
         // See 'Configuration options' for more information.
         logDebug: false, //set to true to get detailed debug logs. To see them : "Ctrl+Shift+i"
@@ -165,28 +176,44 @@ let config = {
         updateInterval: 0, //in min. Set it to 0 for no refresh (for videos)
         NextURLInterval: 0.5, //in min, set it to 0 not to have automatic URL change. If only 1 URL given, it will be updated
         displayLastUpdate: false, //to display the last update of the URL
-        displayLastUpdateFormat: 'ddd - HH:mm:ss', //format of the date and time to display
-        url: ["http://192.168.1.2/inventory?#maintable", "http://192.168.1.2/products#maintable"], //source of the URL to be displayed
+        displayLastUpdateFormat: "ddd - HH:mm:ss", //format of the date and time to display
+        url: [
+          "http://192.168.1.2/inventory?#mainform",
+          "http://192.168.1.2/products#mainform",
+        ], //source of the URL to be displayed
         scrolling: "no", // allow scrolling or not. html 4 only
-        shutoffDelay: 10000 //delay in miliseconds to video shut-off while using together with MMM-PIR-Sensor 
-      }
+        shutoffDelay: 10000, //delay in miliseconds to video shut-off while using together with MMM-PIR-Sensor
+      },
     },
     {
-      module: 'MMM-Todoist',
-      position: 'bottom_right',	// This can be any of the regions. Best results in left or right regions.
-      header: 'Todoist', // This is optional
-      config: { // See 'Configuration options' for more information.
+      module: "MMM-NowPlayingOnSpotify",
+      position: "bottom_right",
+      config: {
+        // see https://github.com/raywo/MMM-NowPlayingOnSpotify
+        showCoverArt: true,
+        clientID: "",
+        clientSecret: "", 
+        accessToken: "",
+        refreshToken: "",
+      },
+    },
+    {
+      module: "MMM-Todoist",
+      position: "bottom_right", // This can be any of the regions. Best results in left or right regions.
+      header: "Todoist", // This is optional
+      config: {
+        // See 'Configuration options' for more information.
         hideWhenEmpty: false,
-        accessToken: '', // TODOIST ACCESS TOKEN HERE ~scr~
-        maximumEntries: 60,
+        accessToken: todoist_access_token,
+        maximumEntries: 20,
         sortType: "dueDateDescPriority",
         updateInterval: 10 * 60 * 1000, // Update every 10 minutes
         fade: false,
         // projects and/or labels is mandatory:
-        projects: [2295876986],
-        labels: [] // Tasks for any projects with these labels will be shown.
-      }
-    }
+        projects: todoist_projects,
+        labels: [], // Tasks for any projects with these labels will be shown.
+      },
+    },
   ],
 };
 
